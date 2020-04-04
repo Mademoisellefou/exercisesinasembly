@@ -1,0 +1,60 @@
+.model small;asembler8086
+.stack 64
+.data
+total dw 0
+var dw 0
+var1 dw 0
+ocho dw 8 
+.code
+Inicio:
+mov  ax,@data
+mov ds, ax
+;-------------
+mov dx,0000h
+mov ax, 124
+mov bx,10
+div bx
+mov var,ax
+mov  ax,dx
+add total,ax
+mov ax,var
+Loop1:
+mov dx,0000h
+cmp ax,0
+je mostrar1
+div bx
+mov var1, ax
+mov ax,dx
+mul ocho 
+add total,ax
+mov ax,ocho
+mov bx,8
+mul bx 
+mov ocho ,ax
+mov bx ,10
+mov ax,var1
+jmp Loop1
+mostrar1:
+mov ax,total
+;mov ax,64
+mov bx,10
+mov  cx,0
+while1:
+	mov dx,0000h
+	div bx
+	push dx
+	inc cx;	
+	cmp ax,0
+	je mostrar
+	jmp while1
+mostrar:
+		mov dx,0000h
+		pop dx
+		add dl,30h
+		mov ah,02h
+		int 21h
+		loop mostrar	
+;------------
+mov ah,4ch
+int 21h
+end Inicio
