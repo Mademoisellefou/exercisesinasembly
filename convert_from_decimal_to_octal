@@ -1,0 +1,31 @@
+.model small
+.stack 64
+.data
+.code
+Inicio:;de decimal a octal
+mov  ax,@data
+mov ds, ax
+;-------------
+ mov ax,64
+ mov bx,8
+mov  cx,0
+ while1:
+ mov dx,0000h
+	div bx
+	push dx
+	inc cx;	
+cmp ax,0
+	je mostrar
+	jmp while1
+mostrar:
+		mov dx,0000h
+	pop dx
+		add dl,30h
+		mov ah,02h
+		int 21h
+		loop mostrar	
+
+;------------
+mov ah,4ch
+int 21h
+end Inicio
