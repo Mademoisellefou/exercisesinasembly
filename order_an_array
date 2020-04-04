@@ -1,0 +1,48 @@
+.model small
+.stack 64
+.data
+v db 2,3,7,1
+c dw 0
+.code
+Inicio:
+mov ax,@data
+mov ds,ax
+;-----------
+mov si,0 
+mov di,1
+mov cx,3
+loop1:
+mov c,cx
+LOOP2:
+mov al,v[di]
+cmp al,v[si]
+ja saltar
+mov bl,v[si]
+mov v[di],bl
+mov v[si],al
+saltar:
+inc di
+loop LOOP2
+mov di,0
+inc si
+mov di,si
+inc di
+mov cx,c
+loop loop1
+;---------------
+
+salir:
+mov cx,4
+mov si,offset v
+mostj:
+mov dx,[si]
+add dl,30h
+mov  ah,02h
+int 21h
+inc si
+loop mostj
+;-----------
+mov ah,4ch
+int 21h
+
+end Inicio
