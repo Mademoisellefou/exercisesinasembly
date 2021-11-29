@@ -1,14 +1,22 @@
-include macro1.asm
+mostrarcad  macro text
+push ax
+push dx
+mov ah,09h
+lea dx,text
+int 21h
+pop dx
+pop ax
+endm
 .model small
 .stack 64
 .data
-menu db "=============MENU================",10,13,
+menu db 10,13,"=============MENU================",10,13,
  db "       1. SUMA",10,13,
  db "       2. RESTA",10,13,
  db "       3. MULTIPLICACION",10,13,
  db "       4. DIVISION",10,13,
- db "       5. SALIR",10,13,"$"
- inip db 10,13,"ingrese una op",10,13,"$"
+ db "       5. SALIR",10,13,
+ db  "ingrese una op",10,13,"$"
  finp db 10,13,"adios$"
 s db "Suma$"
 r db "resta$"
@@ -21,11 +29,17 @@ fil db 5
 pag db 0   
 a dw 0
 b dw 0
+fini db 0
+cini db 0
+ffin db 24
+cfin db 79
+linea db 0
+color db 0h
 .code
 Inicio: 
 mov ax,@data
 mov ds,ax  
-mov ax,0
+  mov ax,0
  call leernum
  call numcad 
  mostrarcad salto
@@ -37,59 +51,82 @@ mov ax,0
  call numcad     
  mostrarcad salto
  mostrarcad num
- mov b,ax      
+ mov b,ax  
+mostrarcad menu   
 ;---
-ciclo1:
- call gotoxy
-mostrarcad menu
-mostrarcad inip
-cmp ah,10h
-int 16h
-cmp ah,02h
-je suma
-cmp ah,03h
-je resta
-cmp ah,04h
-je mult
-cmp ah,05h
-je divi 
-cmp ah,06h
-je salir  
-jmp ciclo1
+    ciclo1:
+    mov ax,0
+    mov ah,10h
+    int 16h  
+    cmp ah,02h
+    je suma
+    cmp ah,03h
+    je resta
+    cmp ah,04h
+    je mult
+    cmp ah,05h
+    je divi
+	cmp ah,48h
+	je salir 
+    jmp ciclo1
 ;---
 suma:
 mov ax,a
 mov bx,b
 add ax,bx
 call numcad
-mostrarcad num
-jmp ciclo1 
+call pant
+jmp ciclo1
 resta:
 mov ax,a
 mov bx,b
 sub ax,bx
 call numcad
-mostrarcad num
+call pant
 jmp ciclo1
 mult:         
 mov ax,a
 mov bx,b
 mul bx
 call numcad
-mostrarcad num
+call pant
 jmp ciclo1
 divi:
 mov ax,a
 mov bx,b
 div bx
 call numcad
-mostrarcad num
+call pant
 jmp ciclo1
 salir:   
 mostrarcad finp
 mov ah,4ch
 int 21h
-;--    
+;--     
+pant proc
+mostrarcad num
+mostrarcad salto
+ret
+pant endp
+clrscr proc near
+push ax
+push bx
+push cx
+push dx
+mov ah, 06h
+mov bh,color
+mov al,linea
+mov ch,fini
+mov cl,cini
+mov dh,ffin
+mov dl,cfin
+int 10h
+pop dx
+pop cx
+pop bx
+pop ax
+ret
+clrscr endp 
 gotoxy proc near
 push dx
 push bx
