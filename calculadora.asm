@@ -16,12 +16,12 @@ d db "divi$"
 m  db "mul$" 
 salto db 10,13,"$"
 num db 15  dup("$")
-.code
 col db 35
 fil db 5
 pag db 0   
 a dw 0
 b dw 0
+.code
 Inicio: 
 mov ax,@data
 mov ds,ax  
