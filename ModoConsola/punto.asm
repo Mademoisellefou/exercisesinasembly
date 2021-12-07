@@ -46,7 +46,6 @@ int 10h
 mov cx,100
 ciclo:
     add fil,1
-	;add col,1
     push cx
 	mov ah,0ch ; Escribe un Pixel
 	mov al,62h
