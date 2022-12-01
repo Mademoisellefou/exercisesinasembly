@@ -35,7 +35,6 @@ cini db 0
 ffin db 24
 cfin db 79
 linea db 0
-color db 0h
 .code
 Inicio: 
 mov ax,@data
@@ -105,29 +104,10 @@ mov ah,4ch
 int 21h
 ;--     
 pant proc
-mostrarcad num
 mostrarcad salto
+mostrarcad num
 ret
 pant endp
-clrscr proc near
-push ax
-push bx
-push cx
-push dx
-mov ah, 06h
-mov bh,color
-mov al,linea
-mov ch,fini
-mov cl,cini
-mov dh,ffin
-mov dl,cfin
-int 10h
-pop dx
-pop cx
-pop bx
-pop ax
-ret
-clrscr endp 
 ;---------
 numcad proc
 push ax
