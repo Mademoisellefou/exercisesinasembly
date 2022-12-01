@@ -57,8 +57,8 @@ mostrarcad menu
     ciclo1:
     mostrarcad ask
     mov ax,0
-    mov al,01h
-    int 10h  
+    mov ah,01h
+    int 21h
     cmp al,31h
     je suma
     cmp al,32h
@@ -67,8 +67,8 @@ mostrarcad menu
     je mult
     cmp al,34h
     je divi
-	cmp al,35h
-	je salir 
+    cmp al,35h
+    je salir 
     jmp ciclo1
 ;---
 suma:
@@ -128,22 +128,6 @@ pop bx
 pop ax
 ret
 clrscr endp 
-gotoxy proc near
-push dx
-push bx
-push ax
-mov ah,02h
-mov bh,00
-mov dh,fil
-mov dl,col
-int 10h
-pop ax
-pop bx
-pop dx
-
-ret
-gotoxy endp
-
 ;---------
 numcad proc
 push ax
