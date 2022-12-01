@@ -15,8 +15,9 @@ menu db 10,13,"=============MENU================",10,13,
  db "       2. RESTA",10,13,
  db "       3. MULTIPLICACION",10,13,
  db "       4. DIVISION",10,13,
- db "       5. SALIR",10,13,
- db  "ingrese una op",10,13,"$"
+ db "       5. SALIR",10,13,"$"
+ask db  10,13,"ingrese una op",10,13,"$"
+msgnum db 10,13,"ingrese un numero: $"
  finp db 10,13,"adios$"
 s db "Suma$"
 r db "resta$"
@@ -40,33 +41,33 @@ Inicio:
 mov ax,@data
 mov ds,ax  
   mov ax,0
+ mostrarcad msgnum 
  call leernum
  call numcad 
  mostrarcad salto
- mostrarcad num 
- mostrarcad salto
  mov a,ax
- mov ax,0        
+ mov ax,0
+ mostrarcad msgnum
  call leernum
  call numcad     
  mostrarcad salto
- mostrarcad num
  mov b,ax  
 mostrarcad menu   
 ;---
     ciclo1:
+    mostrarcad ask
     mov ax,0
-    mov ah,10h
-    int 16h  
-    cmp ah,02h
+    mov al,01h
+    int 10h  
+    cmp al,31h
     je suma
-    cmp ah,03h
+    cmp al,32h
     je resta
-    cmp ah,04h
+    cmp al,33h
     je mult
-    cmp ah,05h
+    cmp al,34h
     je divi
-	cmp ah,48h
+	cmp al,35h
 	je salir 
     jmp ciclo1
 ;---
